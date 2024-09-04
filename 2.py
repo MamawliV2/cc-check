@@ -152,7 +152,12 @@ for P in file.readlines():
 	    
     response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, json=json_data)
 	    
-    t=(response.json()['data']['tokenizeCreditCard']['token'])
+    response_data = response.json()
+if response_data and 'data' in response_data and 'tokenizeCreditCard' in response_data['data']:
+    t = response_data['data']['tokenizeCreditCard']['token']
+else:
+    print("Required keys are missing in the response data")
+    t = None
 	    
     if t:
 	    print(f'{md2}• Tσкяи Wαѕ EχтяαcтєD Sυccєѕѕfυℓℓу √ ')
